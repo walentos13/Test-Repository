@@ -5,4 +5,8 @@
     domain: mobile_app
     type: notify
     message: '123'
+  - device_id: 009d516d22a3bf5f6cbc5c3f6b605173
+    domain: mobile_app
+    type: notify
+    message: '456'    
   mode: single
