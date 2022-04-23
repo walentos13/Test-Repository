@@ -1,0 +1,69 @@
+- platform: systemmonitor
+  resources:
+    - type: processor_use
+    - type: disk_use_percent
+      arg: "/"
+    - type: disk_free
+      arg: "/"
+    - type: memory_use_percent
+    - type: network_in
+      arg: eth0
+    - type: throughput_network_in
+      arg: eth0
+    - type: network_out
+      arg: eth0
+    - type: throughput_network_out
+      arg: eth0
+    - type: processor_temperature
+    - type: last_boot
+
+#https://www.home-assistant.io/integrations/history_stats/
+- platform: history_stats
+  name: LED dzisiaj
+  entity_id: switch.tasmota
+  state: "on"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: PIR dzisiaj
+  entity_id: binary_sensor.pir_sonoff_ias_zone
+  state: "on"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: Piotr praca / 10d
+  entity_id: person.piotr
+  state: "Praca"
+  type: time
+  end: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  duration:
+    days: 10
+- platform: history_stats
+  name: Piotr poza domem / 10d
+  entity_id: person.piotr
+  state: "not_home"
+  type: time
+  end: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  duration:
+    days: 10
+- platform: history_stats
+  name: Piotr w domu / 10d
+  entity_id: person.piotr
+  state: "home"
+  type: time
+  end: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  duration:
+    days: 10
+#Ostatnie 24h
+#end: "{{ now().replace(hour=0, minute=0, second=0) }}"
+#duration:
+#  hours: 24
+
+#Ostatnie 30 dni
+#end: "{{ now().replace(hour=0, minute=0, second=0) }}"
+#duration:
+#  days: 30

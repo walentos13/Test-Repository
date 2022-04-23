@@ -1,0 +1,29 @@
+- id: '1648989047268'
+  name: Nowa scena
+  entities:
+    switch.biurko:
+      friendly_name: Biurko
+      state: 'on'
+    light.bathroom:
+      effect_list:
+      - colorloop
+      - night
+      - white
+      supported_color_modes:
+      - hs
+      color_mode: hs
+      brightness: 247
+      hs_color:
+      - 330
+      - 28.571
+      rgb_color:
+      - 255
+      - 182
+      - 218
+      xy_color:
+      - 0.386
+      - 0.286
+      assumed_state: true
+      friendly_name: Bathroom
+      supported_features: 61
+      state: 'on'

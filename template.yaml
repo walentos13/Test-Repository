@@ -1,0 +1,26 @@
+sensor:
+  - name: "Funbox pobrane GB"
+    unit_of_measurement: 'GB'
+    state: "{{ (states('sensor.orange_funbox_3_b_received') | int / 1073741824) | round(3) }}"
+  - name: "Funbox wysłane GB"
+    unit_of_measurement: 'GB'
+    state: "{{ (states('sensor.orange_funbox_3_b_sent') | int / 1073741824) | round(3) }}"
+  - name: "Funbox pobieranie MB/s"
+    unit_of_measurement: 'MB'
+    state: "{{ (states('sensor.orange_funbox_3_kib_s_received') | int / 1024) | round(2) }}"
+  - name: "Funbox wysyłanie MB/s"
+    unit_of_measurement: 'MB'
+    state: "{{ (states('sensor.orange_funbox_3_kib_s_sent') | int / 1024) | round(2) }}"
+
+  - name: "Praca %"
+    unit_of_measurement: '%'
+    state: "{{ ((states('sensor.piotr_praca_10d')|float / 240) * 100) |round(0) }}"
+  - name: "Dom %"
+    unit_of_measurement: '%'
+    state: "{{ ((states('sensor.piotr_w_domu_10d')|float / 240) * 100) |round(0) }}"
+  - name: "Poza domem %"
+    unit_of_measurement: '%'
+    state: "{{ ((states('sensor.piotr_poza_domem_10d')|float / 240) * 100) |round(0) }}"
+  - name: "Inne %"
+    unit_of_measurement: '%'
+    state: "{{ (100 - ((states('sensor.piotr_praca_10d')|float / 240) * 100) - ((states('sensor.piotr_w_domu_10d')|float / 240) * 100) - ((states('sensor.piotr_poza_domem_10d')|float / 240) * 100)) |round(0) }} "

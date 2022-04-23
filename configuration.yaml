@@ -1,0 +1,101 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+template: !include template.yaml
+sensor: !include sensor.yaml
+utility_meter: !include utility_meter.yaml
+
+android_ip_webcam:
+  - host: 192.168.1.46
+    port: 8046
+    username: walentos
+    password: Kociak22
+    name: Sam46
+    switches:
+      - night_vision
+      - overlay
+      - torch
+  - host: 192.168.1.47
+    port: 8047
+    username: walentos
+    password: Kociak22
+    name: Sam47
+    switches:
+      - night_vision
+      - overlay
+      - torch
+
+#sensor:  
+#  - platform: systemmonitor
+#    resources:
+#    - type: processor_use
+#    - type: disk_use_percent
+#      arg: "/"
+#    - type: disk_free
+#      arg: "/"
+#    - type: memory_use_percent
+#    - type: network_in
+#      arg: eth0
+#    - type: throughput_network_in
+#      arg: eth0
+#    - type: network_out
+#      arg: eth0
+#    - type: throughput_network_out
+#      arg: eth0
+#    - type: processor_temperature
+#    - type: last_boot
+
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+sonoff:
+  username: piotr@walentos.eu
+  password: Kociak22
+  force_update: [temperature, power]
+  scan_interval: '00:05:00'  # (optional) default 5 minutes
+  sensors: [temperature, humidity, power, current, voltage]
+
+panel_iframe:
+  mdiindex:
+    title: MDI Icon Index
+    icon: mdi:vector-square
+    url: https://raw.githack.com/james-fry/home-assistant-mdi/master/home-assistant-mdi.html
+
+
+light:
+  - platform: limitlessled
+    bridges:
+      - host: 192.168.1.51
+        port: 5987
+        version: 3
+        groups:
+        - number: 1
+          name: Bedroom1
+        - number: 2
+          type: rgbw
+          name: Bathroom
+        - number: 3
+          type: rgbw
+          name: Kitchen
+          fade: true
+        - number: 4
+          type: rgbw
+          name: Livingroom
+
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: walentos
+  password: Kociak22
+  max_retries: 3
+  default_measurement: state

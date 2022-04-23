@@ -1,0 +1,169 @@
+- id: '1648187783052'
+  alias: Paula wychodzi z domu
+  description: ''
+  trigger:
+  - platform: device
+    device_id: bde78305d96940b3136c58a2f2a443bd
+    domain: device_tracker
+    entity_id: device_tracker.paula_tel
+    type: leaves
+    zone: zone.home
+  condition: []
+  action:
+  - device_id: 009d516d22a3bf5f6cbc5c3f6b605173
+    domain: mobile_app
+    type: notify
+    message: Paula opuściła dom
+  mode: single
+- id: '1648331855201'
+  alias: test
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.biurko_temperature
+    above: '30'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: bf614010b6f49ffbfc4cfd52700241c4
+    entity_id: switch.tv_audio
+    domain: switch
+  mode: single
+- id: '1648331958840'
+  alias: test2
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.biurko_temperature
+    below: '30'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: bf614010b6f49ffbfc4cfd52700241c4
+    entity_id: switch.tv_audio
+    domain: switch
+  mode: single
+- id: '1648989433815'
+  alias: Nowa automatyzacja
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.piotr_tel_is_charging
+  condition: []
+  action:
+  - device_id: 009d516d22a3bf5f6cbc5c3f6b605173
+    domain: mobile_app
+    type: notify
+    message: Ładowanie
+  mode: single
+- id: '1649007780302'
+  alias: Radio
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.tv_sharp_3
+    data:
+      media_content_id: media-source://radio_browser/3afa35f2-8346-11e8-aa66-52543be04c81
+      media_content_type: audio/aac
+    metadata:
+      title: Disco Polo - Open FM
+      thumbnail: http://open.fm/logo/200x200/21
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://radio_browser
+      - media_content_type: music
+        media_content_id: media-source://radio_browser/language
+      - media_content_type: music
+        media_content_id: media-source://radio_browser/language/pl
+  mode: single
+- id: '1649169835900'
+  alias: LED zapalanie
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: f2fb6411b18a839d304a74d801513cc8
+    entity_id: binary_sensor.pir_sonoff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 617fab65cac323a37c515050ddb97e26
+    entity_id: switch.tasmota
+    domain: switch
+  - service: timer.start
+    data: {}
+    target:
+      entity_id: timer.minutnik
+  mode: single
+- id: '1649169891903'
+  alias: LED gaszenie
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: f2fb6411b18a839d304a74d801513cc8
+    entity_id: binary_sensor.pir_sonoff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 617fab65cac323a37c515050ddb97e26
+    entity_id: switch.tasmota
+    domain: switch
+  mode: single
+- id: '1649349654176'
+  alias: Licznik zapaleń
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: f2fb6411b18a839d304a74d801513cc8
+    entity_id: binary_sensor.pir_sonoff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: counter.increment
+    data: {}
+    target:
+      entity_id: counter.licznik
+  mode: single
+- id: '1649396705354'
+  alias: Wilgoć w łazience > 60%
+  description: ''
+  trigger:
+  - type: humidity
+    platform: device
+    device_id: 927d37d268577c79b4a42d0847d9c395
+    entity_id: sensor.th_lazienka_2c6f0025_humidity
+    domain: sensor
+    above: 60
+  condition: []
+  action:
+  - device_id: 009d516d22a3bf5f6cbc5c3f6b605173
+    domain: mobile_app
+    type: notify
+    message: Wilgoć w łazience
+    title: Wilgoć w łazience wynosi ponad 60%
+  mode: single
+- id: '1649397641911'
+  alias: Test minutnik
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: timer.minutnik
+    to: Idle
+  condition: []
+  action:
+  - device_id: 009d516d22a3bf5f6cbc5c3f6b605173
+    domain: mobile_app
+    type: notify
+    message: Test minutnik
+    title: Test minutnik
+  mode: single
